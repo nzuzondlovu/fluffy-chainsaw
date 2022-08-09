@@ -56,9 +56,14 @@
             </div>
         </div>
     </header>
+    <!-- Section-->
+    <section class="py-5">
+        <div class="container">
 
-    @yield('content')
+            @yield('content')
 
+        </div>
+    </section>
     <!-- Footer-->
     <footer class="py-5 bg-dark">
         <div class="container">
