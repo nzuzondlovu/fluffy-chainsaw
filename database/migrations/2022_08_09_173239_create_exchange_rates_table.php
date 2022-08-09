@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('symbol_id')->unsigned()->index();
             $table->foreign('symbol_id')->references('id')->on('symbols')->onDelete('cascade');
             $table->string('symbol_code');
-            $table->double('rate_value', 8, 6);
+            $table->double('rate_value', 15, 9);
             $table->date('rate_date');
             $table->timestamps();
         });

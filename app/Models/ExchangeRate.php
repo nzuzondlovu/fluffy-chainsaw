@@ -15,10 +15,9 @@ class ExchangeRate extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'end_date',
+        'rate_date',
         'symbol_id',
         'rate_value',
-        'start_date',
         'symbol_code',
     ];
 

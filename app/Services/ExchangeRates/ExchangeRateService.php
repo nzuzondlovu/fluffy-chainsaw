@@ -70,7 +70,9 @@ class ExchangeRateService
         if (isset($data['success']) && $data['success'] == true) {
             // SAVE DATA TO DATABASE
             if ($endpoint == 'timeseries') {
-                foreach ($data['rates'] as $key => $value) {
+                $rates = $data['rates'];
+
+                foreach ($rates as $key => $value) {
                     $symbol = Symbol::where('code', $data['base'])->first();
 
                     foreach ($value as $code => $rate) {
