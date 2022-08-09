@@ -20,14 +20,14 @@ class ExchangeRateService
      *
      * @var string
      */
-    private $start_date = null;
+    private $start_date = '';
 
     /**
      * Query base symbol
      *
      * @var string
      */
-    private $base_symbol = null;
+    private $base_symbol = '';
 
     /**
      * API auth Key
@@ -50,7 +50,7 @@ class ExchangeRateService
      * @param string $start_date
      * @param string $end_date
      */
-    public function __construct($base_symbol, $start_date, $end_date)
+    public function __construct($base_symbol = '', $start_date = '', $end_date = '')
     {
         $this->end_date = $end_date;
         $this->start_date = $start_date;
