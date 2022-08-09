@@ -6,12 +6,48 @@ use Exception;
 
 class ExchangeRateService
 {
+    /**
+     * Query end date
+     *
+     * @var string
+     */
     private $end_date = null;
+
+    /**
+     * Query start date
+     *
+     * @var string
+     */
     private $start_date = null;
+
+    /**
+     * Query base symbol
+     *
+     * @var string
+     */
     private $base_symbol = null;
+
+    /**
+     * API auth Key
+     *
+     * @var string
+     */
     private $api_key = "y8NIm1dmPLDfQk81rQZNH8gd8peL7v9K";
+
+    /**
+     * API base url
+     *
+     * @var string
+     */
     private $base_url = "https://api.apilayer.com/exchangerates_data/timeseries";
 
+    /**
+     * Instantiate service construct function
+     *
+     * @param string $base_symbol
+     * @param string $start_date
+     * @param string $end_date
+     */
     public function __construct($base_symbol, $start_date, $end_date)
     {
         $this->end_date = $end_date;
@@ -19,6 +55,11 @@ class ExchangeRateService
         $this->base_symbol = $base_symbol;
     }
 
+    /**
+     * Get data and save it on system
+     *
+     * @return array
+     */
     public function getData()
     {
         $data = $this->apiCall();
@@ -28,6 +69,11 @@ class ExchangeRateService
         }
     }
 
+    /**
+     * Call the api for data
+     *
+     * @return array
+     */
     public function apiCall()
     {
         try {
