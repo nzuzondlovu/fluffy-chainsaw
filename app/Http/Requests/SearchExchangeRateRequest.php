@@ -24,9 +24,9 @@ class SearchExchangeRateRequest extends FormRequest
     public function rules()
     {
         return [
-            'end_date' => 'required',
-            'start_date' => 'required',
-            'base_symbol' => 'required',
+            'base_symbol' => 'required|string',
+            'end_date' => 'required|date|after:start_date',
+            'start_date' => 'required|date|before:end_date',
         ];
     }
 }

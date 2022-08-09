@@ -8,6 +8,7 @@
         <div class="text-center text-white">
             <h1 class="display-4 fw-bolder">{{ $symbol->code }}</h1>
             <p class="lead fw-normal text-white-50 mb-0">{{ $symbol->name }}</p>
+            <p class="lead fw-normal text-white-50 mb-0">{{ $dates[0] }} - {{ $dates[1] }}</p>
         </div>
     </div>
 </header>
@@ -15,7 +16,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-6">
         @if (isset($results))
         <div class="accordion" id="accordionExample">
             @foreach ($results as $date => $result)
@@ -45,6 +46,20 @@
             Please use the form to get an exchange rate.
         </p>
         @endif
+    </div>
+    <div class="col">
+        <h3>Min</h3>
+        <p>1 {{ $symbol->code }} - {{ $min->rate_value }} {{
+            $min->symbol_code }}</p>
+    </div>
+    <div class="col">
+        <h3>Average</h3>
+        <p>{{ $avg }}</p>
+    </div>
+    <div class="col">
+        <h3>Max</h3>
+        <p>1 {{ $symbol->code }} - {{ $max->rate_value }} {{
+            $max->symbol_code }}</p>
     </div>
 </div>
 @endsection

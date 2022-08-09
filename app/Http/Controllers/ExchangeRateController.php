@@ -49,11 +49,24 @@ class ExchangeRateController extends Controller
                 $results = $this->getDbRates($symbol, $from, $to);
             }
 
+            $min = $results->min('rate_value');
+            $min = $results->where('rate_value', $min)->first();
+
+            $avg = $results->avg('rate_value');
+
+            $max = $results->max('rate_value');
+            $max = $results->where('rate_value', $max)->first();
+
+
             return view('show', [
+                'min' => $min,
+                'avg' => $avg,
+                'max' => $max,
                 'symbol' => $symbol,
                 'results' => $results
                     ->load('symbol')
-                    ->groupBy('rate_date')
+                    ->groupBy('rate_date'),
+                'dates' => [$request->start_date, $request->end_date]
             ]);
         }
 
@@ -79,6 +92,7 @@ class ExchangeRateController extends Controller
                     $start_date,
                     $end_date
                 ])
+                ->orderBy('rate_date', 'desc')
                 ->get();
         }
 
