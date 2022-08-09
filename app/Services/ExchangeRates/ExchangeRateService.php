@@ -13,7 +13,7 @@ class ExchangeRateService
      *
      * @var string
      */
-    private $end_date = null;
+    private $end_date = '';
 
     /**
      * Query start date
