@@ -34,7 +34,7 @@ class ExchangeRateService
      *
      * @var string
      */
-    private $api_key = "y8NIm1dmPLDfQk81rQZNH8gd8peL7v9K";
+    private $api_key = '';
 
     /**
      * API base url
@@ -55,6 +55,7 @@ class ExchangeRateService
         $this->end_date = $end_date;
         $this->start_date = $start_date;
         $this->base_symbol = $base_symbol;
+        $this->api_key = env('EXCHANGE_RATE_KEY');
     }
 
     /**
