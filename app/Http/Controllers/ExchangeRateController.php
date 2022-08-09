@@ -49,7 +49,12 @@ class ExchangeRateController extends Controller
                 $results = $this->getDbRates($symbol, $from, $to);
             }
 
-            return view('show', ['results' => $results->groupBy('rate_date')]);
+            return view('show', [
+                'symbol' => $symbol,
+                'results' => $results
+                    ->load('symbol')
+                    ->groupBy('rate_date')
+            ]);
         }
 
         return redirect('/');
