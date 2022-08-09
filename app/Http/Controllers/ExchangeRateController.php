@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Symbol;
-use Illuminate\Http\Request;
+use App\Http\Requests\SearchExchangeRateRequest;
 use App\Services\ExchangeRates\ExchangeRateService;
 
 class ExchangeRateController extends Controller
 {
+    /**
+     * Load the index view
+     *
+     * @return View
+     */
     public function index()
     {
         $symbols = Symbol::all();
@@ -18,5 +23,10 @@ class ExchangeRateController extends Controller
         }
 
         return view('index', ['symbols' => $symbols]);
+    }
+
+    public function search(SearchExchangeRateRequest $request)
+    {
+        dd($request->all());
     }
 }
