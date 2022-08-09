@@ -39,7 +39,7 @@ class ExchangeRateService
      *
      * @var string
      */
-    private $base_url = "https://api.apilayer.com/exchangerates_data/timeseries";
+    private $base_url = "https://api.apilayer.com/exchangerates_data/";
 
     /**
      * Instantiate service construct function
@@ -58,11 +58,12 @@ class ExchangeRateService
     /**
      * Get data and save it on system
      *
+     * @param string $endpoint
      * @return array
      */
-    public function getData()
+    public function getData($endpoint = 'timeseries')
     {
-        $data = $this->apiCall();
+        $data = $this->apiCall($endpoint);
 
         if (isset($data['success']) && $data['success'] == true) {
             // SAVE DATA TO DATABASE
@@ -72,15 +73,16 @@ class ExchangeRateService
     /**
      * Call the api for data
      *
+     * @param string $endpoint
      * @return array
      */
-    public function apiCall()
+    public function apiCall($endpoint)
     {
         try {
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
-                CURLOPT_URL => $this->base_url . '?base=' . $this->base_symbol . '&start_date=' . $this->start_date . '&end_date=' . $this->end_date,
+                CURLOPT_URL => $this->base_url . $endpoint . '?base=' . $this->base_symbol . '&start_date=' . $this->start_date . '&end_date=' . $this->end_date,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
