@@ -104,4 +104,5 @@ class ExchangeRateService
             report($e);
         }
     }
+    
 }
