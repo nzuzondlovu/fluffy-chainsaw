@@ -19,8 +19,7 @@ return new class extends Migration
             $table->foreign('symbol_id')->references('id')->on('symbols')->onDelete('cascade');
             $table->string('symbol_code');
             $table->double('rate_value', 8, 6);
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->date('rate_date');
             $table->timestamps();
         });
     }

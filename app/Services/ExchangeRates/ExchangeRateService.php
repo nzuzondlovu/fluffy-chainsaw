@@ -3,6 +3,8 @@
 namespace App\Services\ExchangeRates;
 
 use Exception;
+use App\Models\Symbol;
+use App\Models\ExchangeRate;
 
 class ExchangeRateService
 {
@@ -67,6 +69,29 @@ class ExchangeRateService
 
         if (isset($data['success']) && $data['success'] == true) {
             // SAVE DATA TO DATABASE
+            if ($endpoint == 'timeseries') {
+                foreach ($data['rates'] as $key => $value) {
+                    $symbol = Symbol::where('code', $data['base'])->first();
+
+                    foreach ($value as $code => $rate) {
+                        ExchangeRate::updateOrCreate([
+                            'rate_date' => $key,
+                            'symbol_code' => $code,
+                            'symbol_id' => $symbol->id,
+                        ], [
+                            'rate_value' => $rate
+                        ]);
+                    }
+                }
+            } else {
+                foreach ($data['symbols'] as $key => $value) {
+                    Symbol::updateOrCreate([
+                        'code' => $key
+                    ], [
+                        'name' => $value
+                    ]);
+                }
+            }
         }
     }
 
@@ -104,5 +129,4 @@ class ExchangeRateService
             report($e);
         }
     }
-    
 }
