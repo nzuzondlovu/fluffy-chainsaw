@@ -19,6 +19,15 @@ class ExchangeRateService
         $this->base_symbol = $base_symbol;
     }
 
+    public function getData()
+    {
+        $data = $this->apiCall();
+
+        if (isset($data['success']) && $data['success'] == true) {
+            // SAVE DATA TO DATABASE
+        }
+    }
+
     public function apiCall()
     {
         try {
