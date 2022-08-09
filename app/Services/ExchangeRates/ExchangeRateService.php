@@ -104,10 +104,16 @@ class ExchangeRateService
     public function apiCall($endpoint)
     {
         try {
+            $query = 'symbols';
+
+            if ($endpoint != $query) {
+                $query = $endpoint . '?base=' . $this->base_symbol . '&start_date=' . $this->start_date . '&end_date=' . $this->end_date;
+            }
+
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
-                CURLOPT_URL => $this->base_url . $endpoint . '?base=' . $this->base_symbol . '&start_date=' . $this->start_date . '&end_date=' . $this->end_date,
+                CURLOPT_URL => $this->base_url . $query,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
