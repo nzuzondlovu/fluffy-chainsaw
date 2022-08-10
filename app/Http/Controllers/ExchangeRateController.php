@@ -135,7 +135,13 @@ class ExchangeRateController extends Controller
         return $user;
     }
 
-    public function save(Request $request)
+    /**
+     * Save the exchange rate for the user
+     *
+     * @param SearchExchangeRateRequest $request
+     * @return void
+     */
+    public function save(SearchExchangeRateRequest $request)
     {
         $user = $this->getUserCookie();
 
@@ -150,5 +156,47 @@ class ExchangeRateController extends Controller
 
                 ], []);
         }
+
+        return redirect('/save');
+    }
+
+    /**
+     * Get all the users saved exchange rates
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function getSaved(Request $request)
+    {
+        $results = collect([]);
+        $user = $this->getUserCookie();
+
+        if (!empty($user)) {
+            $results = DB::table('exchange_rate_user')
+                ->where('user_id', $user->id)
+                ->get();
+        }
+
+        return view('save', [
+            'results' => $results
+        ]);
+    }
+
+    /**
+     * Delete saved exchange rates
+     *
+     * @param Request $request
+     * @param integer $id
+     * @return void
+     */
+    public function deleteSaved(Request $request, $id)
+    {
+        if (!empty($id)) {
+            DB::table('exchange_rate_user')
+                ->where('id', $id)
+                ->delete();
+        }
+
+        return redirect('/save');
     }
 }

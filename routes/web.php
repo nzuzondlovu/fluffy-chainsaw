@@ -17,4 +17,8 @@ Route::get('/', 'App\Http\Controllers\ExchangeRateController@index');
 
 Route::post('/save', 'App\Http\Controllers\ExchangeRateController@save');
 
+Route::get('/save', 'App\Http\Controllers\ExchangeRateController@getSaved');
+
 Route::post('/search', 'App\Http\Controllers\ExchangeRateController@search');
+
+Route::get('/delete/{id}', 'App\Http\Controllers\ExchangeRateController@deleteSaved');
