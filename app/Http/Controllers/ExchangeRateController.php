@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Symbol;
 use App\Http\Requests\SearchExchangeRateRequest;
 use App\Services\ExchangeRates\ExchangeRateService;
@@ -17,13 +18,18 @@ class ExchangeRateController extends Controller
     public function index()
     {
         $symbols = Symbol::all();
+        $user = $this->getUserCookie();
 
         if ($symbols->isEmpty()) {
             $service = new ExchangeRateService();
             $service->getData('symbols');
+            $symbols = Symbol::all();
         }
 
-        return view('index', ['symbols' => $symbols]);
+        return view('index', [
+            'user' => $user,
+            'symbols' => $symbols
+        ]);
     }
 
     /**
@@ -34,6 +40,7 @@ class ExchangeRateController extends Controller
      */
     public function search(SearchExchangeRateRequest $request)
     {
+        $user = $this->getUserCookie();
         $symbol = Symbol::where('code', $request->base_symbol)->first();
 
         if (!empty($symbol)) {
@@ -62,6 +69,7 @@ class ExchangeRateController extends Controller
                 'min' => $min,
                 'avg' => $avg,
                 'max' => $max,
+                'user' => $user,
                 'symbol' => $symbol,
                 'results' => $results
                     ->load('symbol')
@@ -97,5 +105,31 @@ class ExchangeRateController extends Controller
         }
 
         return $results;
+    }
+
+    /**
+     * Get / Set the user from cookie
+     *
+     * @return mixed
+     */
+    public function getUserCookie()
+    {
+        $user = null;
+
+        if (isset($_COOKIE['user_id'])) {
+            $user = User::find($_COOKIE['user_id']);
+        }
+
+        if (empty($user)) {
+            $user = User::create([
+                'name' => null,
+                'email' => null,
+                'password' => null,
+            ]);
+
+            setcookie('user_id', $user->id, time() + (86400 * 30), "/");
+        }
+
+        return $user;
     }
 }
