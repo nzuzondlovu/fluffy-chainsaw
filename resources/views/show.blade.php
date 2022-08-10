@@ -16,7 +16,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
         @if (isset($results))
         <div class="accordion" id="accordionExample">
             @foreach ($results as $date => $result)
@@ -60,6 +60,19 @@
         <h3>Max</h3>
         <p>1 {{ $symbol->code }} - {{ $max->rate_value }} {{
             $max->symbol_code }}</p>
+    </div>
+    <div class="col">
+        <div class="row">
+            <div class="col">
+                <form action="/save" method="post">
+                    @csrf
+                    <input type="text" hidden name="start_date" value="{{ $dates[0] }}">
+                    <input type="text" hidden name="end_date" value="{{ $dates[1] }}">
+                    <input type="text" hidden name="base_symbol" value="{{ $symbol->code }}">
+                    <button type="submit" class="btn btn-primary">Save Exchange Rate</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

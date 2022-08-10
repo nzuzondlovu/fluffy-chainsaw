@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Symbol;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\SearchExchangeRateRequest;
 use App\Services\ExchangeRates\ExchangeRateService;
 
@@ -131,5 +133,22 @@ class ExchangeRateController extends Controller
         }
 
         return $user;
+    }
+
+    public function save(Request $request)
+    {
+        $user = $this->getUserCookie();
+
+        if (!empty($user)) {
+
+            DB::table('exchange_rate_user')
+                ->updateOrInsert([
+                    'user_id' => $user->id,
+                    'end_date' => $request->end_date,
+                    'start_date' => $request->start_date,
+                    'symbol_code' => $request->base_symbol,
+
+                ], []);
+        }
     }
 }

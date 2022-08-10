@@ -15,4 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'App\Http\Controllers\ExchangeRateController@index');
 
+Route::post('/save', 'App\Http\Controllers\ExchangeRateController@save');
+
 Route::post('/search', 'App\Http\Controllers\ExchangeRateController@search');
