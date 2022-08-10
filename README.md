@@ -1,7 +1,7 @@
 
 # Fluffy Chainsaw
 
-This is an employee management platform used by one user.
+This app lets users search for the latest and old exchange rates for 250 currency.
 
 ## Requirements
 
